@@ -14,7 +14,7 @@ const searchTree = (tree, query) => {
         return true;
     } else if (tree.value > query && tree.left != undefined) {
         // if (tree.left != undefined){
-           return searchTree(tree.left, query);
+        return searchTree(tree.left, query);
         // } 
         // else
         //     return false;
