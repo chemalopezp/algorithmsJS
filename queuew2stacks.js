@@ -15,6 +15,9 @@ class Stack {
             return false;
         }
     }
+    size() {
+        return this.stack.length;
+    }
 };
 
 // Test for Stack
@@ -22,8 +25,9 @@ class Stack {
 
 // console.log(stack);
 // console.log(stack.isEmpty());
-
 // stack.push(12);
+// stack.push(23);
+// console.log(stack.size());
 // console.log(stack.isEmpty());
 // console.log(stack.pop());
 // console.log(stack.isEmpty());
@@ -35,16 +39,18 @@ class Queue {
     }
     enqueue(item) {
         // Move all items to Stack 1
-        while (!this.outStack.isEmpty()) {
-            this.inStack.push(this.outStack.pop());
-        }
+        // while (!this.outStack.isEmpty()) {
+        //     this.inStack.push(this.outStack.pop());
+        // }
         // Push stack 1
         this.inStack.push(item);
     }
     dequeue() {
-        // Move all items to Stack 2
-        while (!this.inStack.isEmpty()) {
-            this.outStack.push(this.inStack.pop());
+        // Move all items to Stack 2, only if Stack 2 is empty
+        if (this.outStack.size() == 0) {
+            while (!this.inStack.isEmpty()) {
+                this.outStack.push(this.inStack.pop());
+            }
         }
         // Pop stack 2
         return this.outStack.pop();
@@ -58,14 +64,10 @@ let queue = new Queue;
 queue.enqueue(1);
 queue.enqueue(2);
 queue.enqueue(3);
-
-console.log(queue);
-
 console.log(queue.dequeue());
-console.log(queue);
 queue.enqueue(4);
-console.log(queue);
 console.log(queue.dequeue());
-console.log(queue);
+queue.enqueue(5);
+console.log(queue.dequeue());
 console.log(queue.dequeue());
 console.log(queue.dequeue());
