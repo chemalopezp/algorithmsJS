@@ -38,10 +38,6 @@ class Queue {
         this.outStack = new Stack();
     }
     enqueue(item) {
-        // Move all items to Stack 1
-        // while (!this.outStack.isEmpty()) {
-        //     this.inStack.push(this.outStack.pop());
-        // }
         // Push stack 1
         this.inStack.push(item);
     }
