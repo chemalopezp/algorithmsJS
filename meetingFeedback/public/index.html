@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      const host = `https://meeting-feedback.herokuapp.com`;
+
+      // Get query parameter
+      const param = (name) => (location.search.split(name + '=')[1] || '').split('&')[0];
+
+      // Get meeting id
+      const meetingId = param('meetingId');
+      console.log(meetingId);
+
+
+      // Send feedback
+      function send(feedback) {
+        const name = $('#name').val() || 'unknown';
+        console.log(`${name} clicked ${feedback}`);
+        
+        $.post(`${host}/feedback`, { feedback, meetingId, name }, (data) => {
+          console.log(data);
+        });
+      }
+    
+      // Get feedback
+      function getFeedback() {
+        $.get(`${host}/feedback?meetingId=${meetingId}`, (data) => {
+            console.log('data', data);
+            $('#up_count').text(data.up);
+            $('#down_count').text(data.down);
+        });
+      }
+
+      $(function() {
+        // Check if the meeting exists
+        $.get(`${host}/meeting?meetingId=${meetingId}`, (data) => {
+          if (data.status === true) {
+            // meeting doesn't exist, you're presenter
+            $('#participant').hide();
+            // TODO: load counts
+          console.log('meeting data', data);
+          
+          setInterval(getFeedback, 1000);
+          } else {
+            // meeting exists, you're participant
+            $('#presenter').hide();
+          }
+        });
+      });
+    </script>
+  </head>
+  <body>
+      <div id="participant">
+        <h1>Participant</h1>
+        <input type="text" id="name" placeholder="your name..." value=""></input>
+        <button id="up" onclick="send('up')">&#128077;</button>
+        <button id="down" onclick="send('down')">&#128078;</button>
+      </div>
+      <div id="presenter">
+        <h1>Presenter</h1>
+        <div>
+          Thumbs up count: <span id='up_count'></span>
+        </div>
+        <div>
+          Thumbs down count: <span id='down_count'></span>
+        </div>
+      </div>
+  </body>
+</html>
