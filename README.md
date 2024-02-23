@@ -1,5 +1,7 @@
 # JS Concepts
 
+Just some notes and examples from preparing interviews.
+
 - Primitive Types
 - Autoboxing
 - Inheritance
@@ -7,6 +9,10 @@
 - ES6 Class
 - Closure
 
-# Algorithms in JS
+# Algorithms
 
-# Data structures in JS
+# Data structures
+
+# System design
+
+# Exercises
